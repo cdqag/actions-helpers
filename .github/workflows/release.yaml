@@ -6,7 +6,11 @@ on:
       - master
 
 jobs:
-  build:
+  test:
+    uses: ./.github/workflows/test.yaml
+
+  release:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
