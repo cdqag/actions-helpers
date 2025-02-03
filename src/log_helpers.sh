@@ -7,19 +7,34 @@ function echo_err() {
 }
 
 function _log_x() {
+	local prefix=""
+	local lines=""
+	
 	if [[ -n "$GITHUB_ACTIONS" ]]; then
+		prefix="::${1}"
+		
 		if [[ -n "$3" ]]; then
-			echo "::${1} title=${2}::$3"
+			prefix="$prefix title=${2}::"
+			lines="$3"
 		else
-			echo "::${1}::$2"
+			prefix="$prefix::"
+			lines="$2"
 		fi
 	else
+		prefix="[${1^^}]"
+
 		if [[ -n "$3" ]]; then
-			echo_err "[${1^^}] ${2}: ${3}"
+			prefix="$prefix ${2}: "
+			lines="$3"
 		else
-			echo_err "[${1^^}] ${2}"
+			prefix="$prefix "
+			lines="$2"
 		fi
 	fi
+
+	for line in $(echo -e "$lines"); do
+		echo_err "${prefix}${line}"
+	done
 }
 
 function log_error() {

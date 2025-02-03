@@ -25,6 +25,23 @@ teardown() {
 	assert_output "[ERROR] Foo"
 }
 
+@test "log_error should print multiple errors when multiline message provided (using \n)" {
+	run log_error "Foo" "Bar\nBaz"
+
+	assert_success
+	assert_output "[ERROR] Foo: Bar
+[ERROR] Foo: Baz"
+}
+
+@test "log_error should print multiple errors when multiline message provided (using multiple arguments)" {
+	run log_error "Foo" "Bar
+Baz"
+
+	assert_success
+	assert_output "[ERROR] Foo: Bar
+[ERROR] Foo: Baz"
+}
+
 @test "log_error should print GHA error command with title" {
 	GITHUB_ACTIONS="true"
 
@@ -41,6 +58,27 @@ teardown() {
 
 	assert_success
 	assert_output "::error::Foo"
+}
+
+@test "log_error should print GHA error command with multiple errors when multiline message provided (using \n)" {
+	GITHUB_ACTIONS="true"
+
+	run log_error "Foo" "Bar\nBaz"
+
+	assert_success
+	assert_output "::error title=Foo::Bar
+::error title=Foo::Baz"
+}
+
+@test "log_error should print GHA error command with multiple errors when multiline message provided (using multiple arguments)" {
+	GITHUB_ACTIONS="true"
+
+	run log_error "Foo" "Bar
+Baz"
+
+	assert_success
+	assert_output "::error title=Foo::Bar
+::error title=Foo::Baz"
 }
 
 @test "log_warning should print warning with title" {
