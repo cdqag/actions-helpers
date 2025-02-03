@@ -63,22 +63,22 @@ Baz"
 @test "log_error should print GHA error command with multiple errors when multiline message provided (using \n)" {
 	GITHUB_ACTIONS="true"
 
-	run log_error "Foo" "Bar\nBaz"
+	run log_error "Foo Bar" "Hello 1\nHello 2"
 
 	assert_success
-	assert_output "::error title=Foo::Bar
-::error title=Foo::Baz"
+	assert_output "::error title=Foo Bar::Hello 1
+::error title=Foo Bar::Hello 2"
 }
 
 @test "log_error should print GHA error command with multiple errors when multiline message provided (using multiple arguments)" {
 	GITHUB_ACTIONS="true"
 
-	run log_error "Foo" "Bar
-Baz"
+	run log_error "Foo Bar" "Hello 1
+Hello 2"
 
 	assert_success
-	assert_output "::error title=Foo::Bar
-::error title=Foo::Baz"
+	assert_output "::error title=Foo Bar::Hello 1
+::error title=Foo Bar::Hello 2"
 }
 
 @test "log_warning should print warning with title" {

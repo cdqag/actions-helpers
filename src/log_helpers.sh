@@ -32,9 +32,10 @@ function _log_x() {
 		fi
 	fi
 
-	for line in $(echo -e "$lines"); do
+	lines=$(echo -e "$lines")
+	while IFS= read -r line; do
 		echo_err "${prefix}${line}"
-	done
+	done <<< "$lines"
 }
 
 function log_error() {
