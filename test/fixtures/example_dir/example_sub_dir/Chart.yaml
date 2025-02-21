@@ -1,0 +1,14 @@
+name: withoutmodule-api
+version: 0.1.0
+description: A Helm chart for Kubernetes
+apiVersion: v2
+appVersion: 1.16.0
+type: application
+
+annotations:
+  example.com/argocd.app.name: customname-api
+  example.com/argocd.app.imageTagPath: config.tag
+  example.com/argocd.app.syncTimeout: '900'
+  example.com/argocd.app.waitTimeout: '300'
+  example.com/argocd.app.syncRetryLimit: '2'
+  
