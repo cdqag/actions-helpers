@@ -21,7 +21,7 @@ function _log_x() {
 			lines="$2"
 		fi
 	else
-		prefix="[${1^^}]"
+		prefix="[$(echo "$1" | tr '[:lower:]' '[:upper:]')]"
 
 		if [[ -n "$3" ]]; then
 			prefix="$prefix ${2}: "
